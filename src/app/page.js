@@ -25,7 +25,6 @@ export default function Home() {
       setCity(data.name);
       setWind(data.wind.speed);
       setWeather(data.weather[0].main);
-      console.log(data.weather[0].main);
     } catch (error) {
       alert("Wrong name, you must enter other name");
     }
