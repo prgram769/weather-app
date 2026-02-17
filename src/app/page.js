@@ -13,9 +13,15 @@ export default function Home() {
   const [wind, setWind] = useState(0);
   const [weather, setWeather] = useState("");
 
-  async function callToApi() {
+  async function callToApi(city) {
     let inputValue = event.target.closest("div").firstChild.value;
-    let apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=${apiKey}&units=metric`;
+    let apiURL;
+
+    if (city !== undefined) {
+      apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    } else {
+      apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=${apiKey}&units=metric`;
+    }
 
     const response = await fetch(apiURL);
     const data = await response.json();
@@ -34,7 +40,7 @@ export default function Home() {
     <main className="flex flex-1 items-center justify-center font-sans bg-linear-to-r from-violet-700 via-indigo-700 to-indigo-800">
       <div className="h-200 w-150 rounded-2xl bg-linear-to-br from-cyan-300 via-emerald-200 to-indigo-900 flex  flex-col">
         <div className="flex justify-center mt-10">
-          <Input onClick={callToApi} />
+          <Input onClick={() => callToApi()} />
         </div>
         <div className="flex h-[75%] flex-col justify-center items-center">
           <Icons weather={weather} />
@@ -71,7 +77,9 @@ export default function Home() {
         </div>
       </div>
       <footer>
-        <p className="ml-10 font-bold text-[30px] bg-blue-300 rounded px-3 py-3 text-black">Made by rugby01</p>
+        <p className="ml-10 font-bold text-[30px] bg-blue-300 rounded px-3 py-3 text-black">
+          Made by rugby01
+        </p>
       </footer>
     </main>
   );
